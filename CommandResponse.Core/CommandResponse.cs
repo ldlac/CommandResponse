@@ -62,11 +62,17 @@ namespace CommandResponse.Core
         {
             if (_error is null)
             {
-                _onSuccessHandlers.ForEach(async x => await x(_entity));
+                foreach (var onSuccessHandler in _onSuccessHandlers)
+                {
+                    await onSuccessHandler(_entity);
+                }
             }
             else
             {
-                _onFailureHandlers.ForEach(async x => await x(_error, _entity));
+                foreach (var onFailureHandler in _onFailureHandlers)
+                {
+                    await onFailureHandler(_error, _entity);
+                }
             }
 
             await Task.CompletedTask;
@@ -134,14 +140,23 @@ namespace CommandResponse.Core
 
         public async Task<TResult> Resolve()
         {
+            TResult result = default;
             if (_error is null)
             {
-                return await _onSuccessHandlers.Select(async x => await x(_entity)).FirstOrDefault();
+                foreach (var onSuccessHandler in _onSuccessHandlers)
+                {
+                    result = await onSuccessHandler(_entity);
+                }
             }
             else
             {
-                return await _onFailureHandlers.Select(async x => await x(_error, _entity)).FirstOrDefault();
+                foreach (var onFailureHandler in _onFailureHandlers)
+                {
+                    result = await onFailureHandler(_error, _entity);
+                }
             }
+
+            return result;
         }
     }
 }
