@@ -8,6 +8,6 @@
     <Copyright>Elixin Software</Copyright>
     <PackageProjectUrl>https://github.com/ldlac/CommandResponse</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ldlac/CommandResponse</RepositoryUrl>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 </Project>
